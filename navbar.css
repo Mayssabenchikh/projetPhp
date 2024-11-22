@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, #29104A, rgba(82, 44, 93, 1), rgba(132, 81, 98, 1), rgba(227, 136, 129, 1), rgb(243, 187, 165));
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+.navbar:hover {
+    background: linear-gradient(to right, rgba(82, 44, 93, 1), rgba(132, 81, 98, 1), rgba(227, 136, 129, 1), rgba(255, 227, 216, 1));
+}
+
+.logo a {
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links, .navs {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navs li {
+    margin-left: 20px;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links li a, .navs li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover, .navs li a:hover {
+    color: #ff6347;
+}
+
+.navs li.active a {
+    font-weight: bold;
+}
