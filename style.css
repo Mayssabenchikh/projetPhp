@@ -5,7 +5,8 @@
     font-family: 'Poppins', sans-serif;
 }
 body {
-    background: url('/assets/circles-background-dark-tones_60389-166.avif') no-repeat center center/cover;
+    /*background: url('/assets/circles-background-dark-tones_60389-166.avif') no-repeat center center/cover;*/
+    background-color: black;
     min-height: 100vh;
     overflow: hidden;
 }
@@ -14,6 +15,7 @@ body {
     width: 100%;
     position: absolute;
     top: 5em;
+    
 }
 .form-box {
     width: 380px;
@@ -26,6 +28,7 @@ body {
     padding: 5px;
     border-radius: 2em;
     overflow: hidden;
+    margin-top: 40px;
 }
 .button-box {
     width: 220px;
@@ -69,12 +72,13 @@ body {
     box-shadow: 0 0 20px rgba(127, 127, 127, 0.24);
     cursor: pointer;
     transition: 0.2s ease;
+    margin-top: 50px;
 }
 .social-icons i:hover {
     transform: scale(1.2);
 }
 .input-group {
-    top: 180px;
+    top: 150px;
     position: absolute;
     width: 280px;
     transition: 0.5s ease;
@@ -88,6 +92,7 @@ body {
     outline: none;
     background: transparent;
     color: white;
+    border-radius: 5px;
 }
 .submit-btn {
     width: 65%;
@@ -136,6 +141,23 @@ input::placeholder {
     text-decoration: underline;
 }
 #aa{
-    margin-top: 20px;
+   
     text-align: center;
+    width: 65%;
+    padding: 11px 20px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    color: black;
+    background: rgb(76, 48, 238);
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    border: 2px solid transparent;
+   
+}
+h2{
+    text-align: center;
+    margin-top: 60px;
+    color: rgb(71, 71, 133);
 }

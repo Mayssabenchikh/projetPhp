@@ -17,9 +17,7 @@
         $req = "INSERT INTO users (name, email, password, phone_num) VALUES ('$name', '$email', '$passwd', '$phone');";
         
         $nb = $connexion->exec($req);
-        
         header("location:affiche.php");
-
         echo $nb;
     } else {
         echo "pb de connexion";

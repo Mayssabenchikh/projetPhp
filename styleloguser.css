@@ -89,3 +89,17 @@ h3{
 .hh{
     display: inline-block;
 }
+.error {
+    color: red;
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.success {
+    color: green;
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
