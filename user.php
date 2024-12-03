@@ -1,11 +1,11 @@
 <?php
-session_start(); // Démarrer la session pour récupérer le message
+session_start(); 
 $message = "";
 $messageType = "";
 if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];  
     $messageType = $_SESSION['message_type'];
-    unset($_SESSION['message'], $_SESSION['message_type']); // Supprimer les messages après affichage
+    unset($_SESSION['message'], $_SESSION['message_type']); 
 }
 ?>
 

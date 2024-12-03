@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,7 +13,8 @@
     <form action="upload.php" method="POST" enctype="multipart/form-data">
     <h2>Ajouter un événement </h2>
     <label for="title">Titre de l'événement:</label>
-    <input type="text" name="title" required><br>
+    <input type="text" name="title"  required>
+    <br>
     
     <label for="description">Description:</label>
     <input type="text" name="description" required><br>
@@ -27,54 +29,67 @@
     <input type="number" name="places_dispo" required><br>
     
     <label for="img">Image:</label>
-    <input type="text" name="img_url" required><br>
-    
+    <input type="text" name="img" required><br>
+    <input type="hidden" name="organisateur_id" value="<?php echo $_SESSION['user_id']; ?>">
     <input type="submit" value="Ajouter l'événement">
 </form>
 
 </body>
 </html>
-<?php
-$host = 'localhost';
-$db = 'Entités';
-$user = 'dsi2425';
-$pass = 'dsi2425';
 
-try {
-    $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erreur de connexion : " . $e->getMessage());
+<?php
+
+
+
+session_start();
+if (isset($_SESSION['id'])) {
+    //echo "ID de l'utilisateur connecté : " . $_SESSION['id'];
+} else {
+    echo "Aucun utilisateur connecté.";
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $date = $_POST['date'];
-    $location = $_POST['location'];
-    $places_dispo = $_POST['places_dispo'];
-    $imgUrl = $_POST['img_url']; 
-    
-    $sql = "INSERT INTO events (title, description, date, location, places_dispo, img) 
-            VALUES (:title, :description, :date, :location, :places_dispo, :img)";
-    
-    $stmt = $conn->prepare($sql);
 
+
+require("config.php");
+
+$title = $_POST['title'];
+$description = $_POST['description'];
+$date = $_POST['date'];
+$location = $_POST['location'];
+$places_dispo = $_POST['places_dispo'];
+$img = $_POST['img'];
+$organisateur_id = $_SESSION['id']; 
+
+if (empty($title) || empty($description) || empty($date) || empty($location) || empty($places_dispo) || empty($img)) {
+    echo "Tous les champs sont obligatoires. Veuillez remplir le formulaire correctement.";
+    exit();
+}
+
+$dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
+try {
+    $pdo = new PDO($dsn, $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $requete = "INSERT INTO events (title, description, date, location, places_dispo, img, organisateur_id) 
+                VALUES (:title, :description, :date, :location, :places_dispo, :img, :organisateur_id)";
+    $stmt = $pdo->prepare($requete);
     $stmt->bindParam(':title', $title);
     $stmt->bindParam(':description', $description);
     $stmt->bindParam(':date', $date);
     $stmt->bindParam(':location', $location);
-    $stmt->bindParam(':places_dispo', $places_dispo, PDO::PARAM_INT);
-    $stmt->bindParam(':img', $imgUrl, PDO::PARAM_STR); 
+    $stmt->bindParam(':places_dispo', $places_dispo);
+    $stmt->bindParam(':img', $img);
+    $stmt->bindParam(':organisateur_id', $organisateur_id); // Associe l'utilisateur connecté
+    $stmt->execute();
 
-    if ($stmt->execute()) {
-        header("Location: home.php");
-        exit;
-    } else {
-        echo "<h3 class='error'>Erreur lors de l'ajout de l'événement.</h3>";
-    }
-    
+    $_SESSION['message'] = "Événement ajouté avec succès!";
+    $_SESSION['message_type'] = "success";
+    header("location:/home.php");
+    exit();
+
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
 }
 
-$conn = null;
+
 ?>

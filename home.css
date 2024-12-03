@@ -24,6 +24,7 @@ body {
     color: #eee;
     font-family: Poppins;
     font-size: 12px;
+    
     /*overflow-x: hidden;*/
 }
 header{
@@ -34,18 +35,7 @@ main {
     flex: 1; }
 
 .navbar {
-    /*width: 100%;
-    height: 10%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: linear-gradient(to right, #020202, rgb(18, 18, 19), rgb(29, 28, 28), rgb(87, 86, 86), rgb(95, 95, 95));
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-    transition: background-color 0.3s ease;*/
+    
     width: 100%;
     z-index: 100;
     display: flex;
@@ -56,7 +46,6 @@ main {
     gap: 5px; 
     background: linear-gradient(to right, #020202, rgb(18, 18, 19), rgb(29, 28, 28), rgb(87, 86, 86), rgb(95, 95, 95));
     position: relative;
-    
 }
 
 .navbar:hover {
@@ -112,8 +101,8 @@ main {
 .search-bar {
     background-color: white;
     z-index: 10;
-    width: 80%; /* Reduce the width of the search bar */
-    margin: 0 auto; /* Center the search bar horizontally */
+    width: 100%; 
+    margin: 0 auto; 
     border-radius: 50px;
     
   }
@@ -121,13 +110,14 @@ main {
     display: flex;
     align-items: center;
     color: black;
-    font-size: 0.9rem; /* Adjust font size if necessary */
+    font-size: 0.9rem; 
+    
 }
   
   .search-box input {
     padding: 1rem;
     width: 100%;
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 100;
     color: black;
     border: 0;
@@ -138,12 +128,13 @@ main {
   }
   
   .search-box i {
-    font-size: 0.7rem;
+    font-size: 1rem;
     cursor: pointer;
+    
   }
   
   .search-box input::placeholder {
-    font-size: 0.7rem;
+    font-size: 1rem;
     font-weight: 500;
     color: black;
   }
@@ -269,7 +260,7 @@ footer .contact-container {
 }
 
 .event-card img {
-    width: 100%;
+    width: 400px;
     height: 250px;
     object-fit: cover;
 }
@@ -296,19 +287,20 @@ footer .contact-container {
 }
 
 .event-card-content a {
-    display: inline-block;
+    display: flex;
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #f1683a;
+    background-color: black;
     color: white;
     border-radius: 5px;
     text-decoration: none;
     text-align: center;
+    justify-content: center;
     transition: background-color 0.3s ease;
 }
 
 .event-card-content a:hover {
-    background-color: #e75d30;
+    background-color: grey;
 }
 
 .event-card:hover {
@@ -322,9 +314,12 @@ footer .contact-container {
         max-width: 350px;
     }
 }
+
 .carousel-inner img {
-    height: 400px; /* Ajustez la hauteur selon vos besoins */
+    height: 650px; /* Ajustez la hauteur selon vos besoins */
     object-fit: cover;
+    
+  
 }
 
 .carousel-caption h5 {
@@ -344,4 +339,23 @@ footer .contact-container {
 .carousel-control-next-icon {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
+}
+#us {
+    color: rgb(230, 208, 230);
+    font-weight: bold;
+}
+#h1, #h {
+    color:rgb(30, 102, 168); /* Set the text color to white for clarity */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for better visibility */
+    font-family: Arial, sans-serif; /* Set a clean font */
+}
+
+#h1 {
+    font-size: 3rem; /* Adjust the font size of the heading */
+    font-weight: bold; /* Make the h1 bold */
+}
+
+#h {
+    font-size: 2rem; /* Adjust the font size of the subheading */
+    font-weight: normal; /* Set the h2 weight to normal */
 }

@@ -1,0 +1,61 @@
+/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Titre principal */
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* Conteneur de la table */
+.container {
+    max-width: 90%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    background-color: #ad76ab;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Ligne survolée */
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Lien d'action (icône de suppression) */
+.table a {
+    color: #dc3545;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.table a:hover {
+    color: #a71d2a;
+}

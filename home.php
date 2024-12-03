@@ -8,11 +8,56 @@ $dbname = "Entités";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT * FROM events";
+    /*"SELECT *, users.name AS organisateur
+                FROM events
+        JOIN users ON events.oraginsater_id = users.user_id
+        ORDER BY date asc";*/
+        $sql = "SELECT events.*, users.name AS organisateur 
+        FROM events 
+        JOIN users ON events.organisateur_id = users.user_id 
+        ORDER BY date desc";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "SELECT events.*, users.name AS organisateur FROM events 
+            JOIN users ON events.organisateur_id = users.user_id 
+            WHERE 1=1 ORDER BY date asc"; // Condition de base
+
+    // Ajouter des conditions en fonction de la recherche
+    if (!empty($_GET['title'])) {
+        $title = "%" . $_GET['title'] . "%";
+        $sql .= " AND events.title LIKE :title";
+    }
+    if (!empty($_GET['location'])) {
+        $location = "%" . $_GET['location'] . "%";
+        $sql .= " AND events.location LIKE :location";
+    }
+    if (!empty($_GET['event_date'])) {
+        $event_date = date('Y-m-d', strtotime($_GET['event_date']));
+        $sql .= " AND DATE(events.date) = :event_date";
+    }
+
+    // Préparer et exécuter la requête
+    $stmt = $conn->prepare($sql);
+
+    // Lier les valeurs de recherche si elles existent
+    if (!empty($title)) {
+        $stmt->bindValue(':title', $title);
+    }
+    if (!empty($location)) {
+        $stmt->bindValue(':location', $location);
+    }
+    if (!empty($event_date)) {
+        $stmt->bindValue(':event_date', $event_date);
+    }
+
+    $stmt->execute();
+    $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+    $events = [];
+}
+ catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
     $events = [];
 }
@@ -45,7 +90,7 @@ $conn = null;
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
-            <form action="search.php" method="get">
+            <form action="home.php" method="get">
                 <div class="search-bar">
                     <div class="search-box">
                         <input type="text" name="title" placeholder="Search in Title...">
@@ -57,41 +102,46 @@ $conn = null;
                 </div>
             </form>
             <ul class="nav-links">
-                <!--<li><a href="./upload.php">Add Events</a></li>-->
-                <li><span><?php if (isset($_SESSION['name'])) {
-                                echo $_SESSION['name'];
-                                echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>';
-                                echo '<li><a href="upload.php"><span class="glyphicon glyphicon-plus"></span> Add Event</a></li>';
-                            } else {
-                                echo '<li><a href="loog.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>';
-                            }
-                            ?>
-                    </span></li>
-            </ul>
+    <!--<li><a href="./upload.php">Add Events</a></li>-->
+    <li><span id="us"><i class="fa-solid fa-user"></i>
+        <?php 
+         
+
+        if (isset($_SESSION['name'])) {
+            echo $_SESSION['name'];
+            echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>';
+            echo '<li><a href="upload.php"><span class="glyphicon glyphicon-plus"></span> Add Event</a></li>';
+        } else {
+            echo '<li><a href="loog.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>';
+        }
+        if (isset($_SESSION['id']) && $_SESSION['id'] == 1) {
+            echo '<li><a href="adm.php"><span class="glyphicon glyphicon-cogs"></span> Admin Dashboard</a></li>';
+        }
+        ?>
+    </span></li>
+</ul>
+
         </nav>
     </header>
     <main>
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="img1.jpg" class="d-block w-100" alt="Event 1">
+            <img src="/assets/e2.jpg" class="d-block w-100" alt="Event 1">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Event 1 Title</h5>
-                <p>Description of Event 1.</p>
+               
             </div>
         </div>
         <div class="carousel-item">
-            <img src="img2.jpg" class="d-block w-100" alt="Event 2">
+            <img src="/assets/e1.jpg" class="d-block w-100" alt="Event 2">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Event 2 Title</h5>
-                <p>Description of Event 2.</p>
+                
             </div>
         </div>
         <div class="carousel-item">
-            <img src="img3.jpg" class="d-block w-100" alt="Event 3">
+            <img src="/assets/e3.jpg" class="d-block w-100" alt="Event 3">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Event 3 Title</h5>
-                <p>Description of Event 3.</p>
+                
             </div>
         </div>
     </div>
@@ -112,16 +162,15 @@ $conn = null;
                         data-title="<?php echo htmlspecialchars(strtolower($event['title'])); ?>"
                         data-location="<?php echo htmlspecialchars(strtolower($event['location'])); ?>"
                         data-date="<?php echo htmlspecialchars($event['date']); ?>">
-
                         <img src="<?php echo htmlspecialchars($event['img']); ?>" alt="Event Image">
                         <div class="event-card-content">
                             <h3><?php echo htmlspecialchars($event['title']); ?></h3>
                             <p><strong>Description: </strong><?php echo htmlspecialchars($event['description']); ?></p>
-                            <p><strong>Organized by: </strong><?php echo htmlspecialchars($event['organisateur_id']); ?></p>
+                            <p><strong>Organized by: </strong><?php echo htmlspecialchars($event['organisateur']); ?></p>
                             <p><strong>Date: </strong><?php echo date("F j, Y", strtotime($event['date'])); ?></p>
                             <p><strong>Location: </strong><?php echo htmlspecialchars($event['location']); ?></p>
                             <p><strong>Available Places: </strong><?php echo htmlspecialchars($event['places_dispo']); ?></p>
-                            <a href="./reservation/formulaire.php?id=<?php echo htmlspecialchars($event['event_id']); ?>" class="btn btn-primary">Détails</a>
+                            <a href="./reservations/formulaire.php?id=<?php echo htmlspecialchars($event['event_id']); ?>" class="btn btn-primary">Réserver</a>
                         </div>
                     </div>
                 <?php endforeach; ?>

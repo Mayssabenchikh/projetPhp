@@ -1,13 +1,13 @@
 <?php
-session_start(); // Démarrer la session pour récupérer le message
+session_start(); 
+
 $message = "";
 $messageType = "";
 
 if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
     $messageType = $_SESSION['message_type'];
-    unset($_SESSION['message'], $_SESSION['message_type']); // Supprimer les messages après affichage
-}
+    unset($_SESSION['message'], $_SESSION['message_type']); }
 ?>
 
 
@@ -48,8 +48,9 @@ if (isset($_SESSION['message'])) {
                 <i class="fa fa-twitter-square" aria-hidden="true"></i>
             </div>
             <form action="verifexist.php" method="POST" id="login" class="input-group">
-                <input type="text" class="input-field" placeholder="email" name="login" required><br><br>
-                <input type="password" class="input-field" placeholder="Password" name="password" required> <br><br>
+            <input type="text" class="input-field" placeholder="email" name="login" required>
+<input type="password" class="input-field" placeholder="Password" name="password" required>
+<br><br>
                 <button type="submit" class="submit-btn">Log In</button><br><br><br>
                 <a id="aa" href="user.php" class="create-account"> create account</a>
                 <?php if (!empty($message)) : ?>

@@ -19,9 +19,6 @@ try {
         } else {
             $req = $pdo->prepare("INSERT INTO users (name, email, password, phone_num) VALUES (?, ?, ?, ?)");
             $req->execute([$name, $email, $passwd, $phone]);
-
-            $_SESSION['message'] = "Utilisateur ajouté avec succès.";
-            $_SESSION['message_type'] = "success";
             
         }
 
